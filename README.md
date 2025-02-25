@@ -1,7 +1,7 @@
 # Authentication System with Node.js, Express, MongoDB, Bcrypt & JWT
 
 ## Overview
-This project implements a secure authentication system using **Node.js, Express.js, MongoDB, Bcrypt, and JWT**. It includes **user registration, login, password hashing, JWT-based authentication**, and **middleware for protected routes**.
+This project implements a secure authentication system using **Node.js, Express.js, MongoDB, Bcrypt, and JWT**. It includes **user registration, login, password hashing, JWT-based authentication**, and **middleware for protected routes**. Additionally, it supports **image uploads using Multer and Cloudinary**.
 
 ## Features
 - 🔐 **JWT Authentication** for securing API routes.
@@ -9,6 +9,8 @@ This project implements a secure authentication system using **Node.js, Express.
 - 🔄 **User Registration & Login** with token-based authentication.
 - 🛡 **Middleware Protection** for verifying user access.
 - 🏗 **RESTful API Design** using Express.js.
+- 📤 **Image Uploading** using Multer and Cloudinary.
+- ☁️ **Cloudinary Integration** for storing images securely.
 
 ---
 
@@ -31,13 +33,13 @@ This project implements a secure authentication system using **Node.js, Express.
 - Loads environment variables using `dotenv`.
 - Connects to **MongoDB**.
 - Uses middleware to parse JSON requests.
-- Defines API routes (`/api/auth`, `/api/home`, `/api/admin`).
+- Defines API routes (`/api/auth`, `/api/home`, `/api/admin`, `/api/upload`).
 - Starts the server on `PORT` (default: 5000).
 
 ### 📝 **Key Learnings**
 ✅ Express.js setup for handling API requests.  
 ✅ Using middleware (`express.json()`).  
-✅ Structuring routes for authentication and admin views.  
+✅ Structuring routes for authentication, image upload, and admin views.  
 
 ---
 
@@ -70,72 +72,17 @@ This project implements a secure authentication system using **Node.js, Express.
 
 ---
 
-## 🔥 **Key Takeaways & Best Practices**
-### ✅ **JWT Authentication**
-- Secure API access using **Bearer Tokens**.
-- Store JWT securely (httpOnly cookies are recommended).
+## 5️⃣ **Image Upload (`uploadImage` function)**
+### 📌 **Functionality**
+- Accepts an image file using **Multer**.
+- Uploads the image to **Cloudinary**.
+- Stores the image URL and metadata in MongoDB.
+- Returns the uploaded image URL and details.
 
-### ✅ **Password Security**
-- Always **hash passwords** before saving to the database.
-- Never store raw passwords.
-
-### ✅ **Express Middleware for Authentication**
-- Protect routes with `authMiddleware.js`.
-- Attach decoded user info to `req.userInfo`.
-
-### ✅ **Error Handling & Status Codes**
-- `401 Unauthorized` → Missing/Invalid Token.
-- `409 Conflict` → User already exists.
-- `500 Internal Server Error` → Unexpected errors.
-
----
-
-## 🚀 **Future Enhancements**
-🔹 **Implement Refresh Tokens** for better security.  
-🔹 **Use httpOnly Cookies** instead of localStorage for storing tokens.  
-🔹 **Enable Rate Limiting** to prevent brute force attacks.  
-🔹 **Add Email Verification** for user registration.  
-🔹 **Deploy API to Cloud** (AWS/GCP/Heroku).  
-
----
-
-## 📌 **Setup & Installation**
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-repo/auth-system.git
-   cd auth-system
-   ```
-
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-
-3. Create a `.env` file and add the following:
-   ```sh
-   PORT=5000
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
-   ```
-
-4. Start the server:
-   ```sh
-   npm start
-   ```
-
-5. **API Endpoints:**
-   - `POST /api/auth/register` → Register a new user.
-   - `POST /api/auth/login` → Login with email and password.
-   - `GET /api/home` → Access protected route (requires authentication).
-
----
-
-## 📜 **License**
-This project is open-source under the **MIT License**.
-
----
-
-## 📩 **Contact**
-🔗 **GitHub:** [https://github.com/your-github](https://github.com/your-github)  
-🔗 **LinkedIn:** [https://linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)  
-📧 **Email:** your-email@example.com  
+### 📤 **Image Upload API**
+**Endpoint:** `POST /api/upload`  
+**Headers:** 
+```json
+{
+  "Authorization": "Bearer jwt_token"
+}
