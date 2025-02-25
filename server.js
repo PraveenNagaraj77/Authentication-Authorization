@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 5000 ;
 const authRoutes = require('./routes/authRoutes')
 const homeRoutes = require('./routes/homeRoutes')
 const adminRoutes = require('./routes/adminRoutes')
+const imageRoutes = require('./routes/imageRoutes');
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRoutes);
 app.use('/api/home',homeRoutes);
 app.use('/api/admin',adminRoutes);
+app.use('/api/image',imageRoutes);
 
 
 app.listen(PORT,()=>{
